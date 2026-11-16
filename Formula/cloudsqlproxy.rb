@@ -6,7 +6,7 @@ class Cloudsqlproxy < Formula
   url "https://github.com/pakohan/cloudsqlproxy.git",
       using:    :git,
       tag:      "v0.2.1",
-      revision: "8b088ca54ea2821135eefcd016cf763f9d89c999"
+      revision: "b6429e9e84f17a6a7e9727001a1f6936f5958f73"
   head "https://github.com/pakohan/cloudsqlproxy.git", branch: "main"
 
   # Swift comes with the Command Line Tools, which Homebrew requires anyway.
