@@ -1,0 +1,7 @@
+/cloudsqlproxy
+/build/
+/.build/
+/dist/
+*.app
+/.idea/
+/.swiftpm/

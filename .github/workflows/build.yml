@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  app:
+    # Apple Silicon runner; the app is built for arm64.
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Full history, so the build number (commit count) is correct.
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+
+      - run: go vet ./...
+
+      - run: make app
+
+      # Zip with ditto so the bundle keeps its permissions and signature;
+      # upload-artifact would otherwise flatten the .app directory.
+      - name: Zip app
+        working-directory: dist
+        run: ditto -c -k --keepParent "Cloud SQL Proxy.app" "Cloud SQL Proxy.zip"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cloud-sql-proxy-macos-arm64
+          path: dist/Cloud SQL Proxy.zip
